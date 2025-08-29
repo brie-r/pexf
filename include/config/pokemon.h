@@ -71,6 +71,12 @@
 #define P_FLAG_FORCE_SHINY               0  // If this flag is set, all wild and gift Pokémon will forced into being Shiny.
 #define P_FLAG_FORCE_NO_SHINY            0  // If this flag is set, all wild and gift Pokémon will forced into NOT being Shiny.
 
+// Level and stat settings
+#define P_USE_LOCKED_LEVEL        TRUE  // If TRUE, all calculations involving a Pokémon's level (stats, damage) will use a fixed value.
+#define P_LOCKED_LEVEL            50  // The level to use if P_USE_LOCKED_LEVEL is true.
+#define P_MULTIPLY_EVS	          1 // Multiplies the stat contribution of EVs. 0 = EVs disabled, 1 = default, 2 = doubled, etc.
+#define P_MULTIPLY_IVS            1 // Multiplies the stat contribution of IVs. 0 = IVs disabled, 1 = default, 2 = doubled, etc.
+
 // Go here if you want to disable specific families of Pokémon.
 #include "config/species_enabled.h"
 

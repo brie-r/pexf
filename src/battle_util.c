@@ -9091,7 +9091,7 @@ static inline u32 CalcDefenseStat(struct DamageCalculationData *damageCalcData, 
 // base damage formula before adding any modifiers
 static inline s32 CalculateBaseDamage(u32 power, u32 userFinalAttack, u32 level, u32 targetFinalDefense)
 {
-    return power * userFinalAttack * (2 * level / 5 + 2) / targetFinalDefense / 50 + 2;
+    return power * userFinalAttack * (2 * (P_USE_LOCKED_LEVEL ? P_LOCKED_LEVEL : level) / 5 + 2) / targetFinalDefense / 50 + 2;
 }
 
 static inline uq4_12_t GetTargetDamageModifier(struct DamageCalculationData *damageCalcData)

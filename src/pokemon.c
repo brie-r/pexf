@@ -1751,14 +1751,16 @@ static u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
     return checksum;
 }
 
-#define CALC_STAT(base, iv, ev, statIndex, field)               \
-{                                                               \
-    u8 baseStat = gSpeciesInfo[species].base;                   \
-    s32 n = (((2 * baseStat + iv + ev / 4) * level) / 100) + 5; \
-    n = ModifyStatByNature(nature, n, statIndex);               \
-    if (B_FRIENDSHIP_BOOST == TRUE)                             \
-        n = n + ((n * 10 * friendship) / (MAX_FRIENDSHIP * 100));\
-    SetMonData(mon, field, &n);                                 \
+#define CALC_STAT(base, iv, ev, statIndex, field)                         \
+{                                                                         \
+    u8 baseStat = gSpeciesInfo[species].base;                             \
+    s32 n = 2 * baseStat + iv * P_MULTIPLY_IVS + ev * P_MULTIPLY_EVS / 4; \
+    n = n * (P_USE_LOCKED_LEVEL ? P_LOCKED_LEVEL : level);                \
+    n = (n / 100) + 5;                                                    \
+    n = ModifyStatByNature(nature, n, statIndex);                         \
+    if (B_FRIENDSHIP_BOOST == TRUE)                                       \
+        n = n + ((n * 10 * friendship) / (MAX_FRIENDSHIP * 100));         \
+    SetMonData(mon, field, &n);                                           \
 }
 
 void CalculateMonStats(struct Pokemon *mon)
@@ -1792,8 +1794,9 @@ void CalculateMonStats(struct Pokemon *mon)
     }
     else
     {
-        s32 n = 2 * gSpeciesInfo[species].baseHP + hpIV;
-        newMaxHP = (((n + hpEV / 4) * level) / 100) + level + 10;
+        s32 n = 2 * gSpeciesInfo[species].baseHP + 0;
+        newMaxHP = (((n + 0 / 4) * P_LOCKED_LEVEL) / 100) + P_LOCKED_LEVEL + 10;
+        // newMaxHP = (((n + hpEV / 4) * level) / 100) + level + 10;
     }
 
     gBattleScripting.levelUpHP = newMaxHP - oldMaxHP;
