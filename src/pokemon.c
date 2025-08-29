@@ -1795,8 +1795,8 @@ void CalculateMonStats(struct Pokemon *mon)
     else
     {
         s32 n = 2 * gSpeciesInfo[species].baseHP + 0;
-        newMaxHP = (((n + 0 / 4) * P_LOCKED_LEVEL) / 100) + P_LOCKED_LEVEL + 10;
-        // newMaxHP = (((n + hpEV / 4) * level) / 100) + level + 10;
+        s32 modified_level = P_USE_LOCKED_LEVEL ? P_LOCKED_LEVEL : level;
+        newMaxHP = (((n + hpIV * P_MULTIPLY_IVS + hpEV * P_MULTIPLY_EVS / 4) * modified_level) / 100) + level + 10;
     }
 
     gBattleScripting.levelUpHP = newMaxHP - oldMaxHP;
